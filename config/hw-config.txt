@@ -1,0 +1,17 @@
+# Configuração do sistema de automação:
+#
+# Como estão ligadas as cargas aos relés:
+# NA: normalmente aberto (quando acionado, fecha-se o circuito)
+# NF: normalmente fechado (quando acionado, abre-se o circuito)
+#
+# Relés
+18	NA 
+15	NA
+14	NF	Luz do escritório
+99	NA	# Para resolver o bug do PHP do Raspberry Pi
+
+#23	NA
+#24	NA
+#25	NA
+#8	NA
+#7	NA
