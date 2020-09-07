@@ -1,7 +1,7 @@
 # hackathonIESB
-Automação usando Raspberry Pi feita para o hackthon da pós do IESB
+Automação usando Raspberry Pi feita para o hackathon da pós do IESB
 
-## Ideia:
+## Ideia
 Projeto de automação residencial
 
 O app móvel aciona, via chamadas a uma API web, as portas de um
@@ -16,6 +16,7 @@ monitorar o ambiente. Sensores para temperatura, umidade, pressão,
 vazamento de gás, vazão de água, dentre outros, estão disponíveis
 no mercado.
 
+## Instalação
 Para instalar, clone o repositório com o comando
 
 	git clone https://github.com/mafgomes/hackathonIESB.git
@@ -25,7 +26,19 @@ Em seguida:
 	cd hackathonIESB
 	sudo ./install.sh
 
-## Hardware:
+## Configuração
+Após a instalação, vá ao diretório /usr/local/automacao,
+com o comando
+
+	cd /usr/local/automacao
+
+e edite o arquivo hw-config.txt, para refletir a configuração
+do seu hardware, ou seja, para que você descreva quais pinos
+da interface GPIO estão ligados aos relés e, opcionalmente,
+que nome você pretende atribuir para as cargas acionadas por
+cada um dos relés.
+
+## Hardware
 Para iniciantes que não têm habilidade com solda, recomenda-se
 o uso de um protoboard, também conhecido como breadboard.
 Trata-se de uma placa com furação para que se insira os
@@ -43,4 +56,100 @@ e em conectores dos componentes.
 Os jumpers podem ser macho-macho, macho-fêmea, ou fẽmea-fêmea,
 indicando o tipo de contatos presentes em suas extremidades.
 
+Mas como saber o que ligar em quê? As seções a seguir
+explicam as ligações a serem feitas para as duas funcionalidades
+principais desse sistema: comando de relés e sensores da
+placa Sense Hat.
 
+### Sense Hat
+O esquema de ligação do
+Raspberry Pi com um Sense Hat, que é uma parte desse projeto,
+está bem documentado em:
+
+https://pinout.xyz/pinout/sense_hat
+
+Embora esta página esteja em inglês, como mostra graficamente
+a pinagem, destacando os pinos utilizados, não deve haver
+dificuldade em conectar os pinos correspondentes, principalmente
+sabendo-se que o conector do Sense Hat foi projetado para
+encaixar-se perfeitamente ao conector do Raspberry Pi.
+
+Só não se esqueça de plugar, além das linhas de sinal,
+também as linhas de alimentação (5V, 3.3V, e terra), que
+figuram no diagrama em inglês, respectivamente, como
+"5V Power", "3V3 Power", e "Ground".
+
+Quaisquer das linhas de alimentação podem ser utilizadas,
+e eu recomendaria o uso de mais de uma, para o caso de
+haver mau contato em alguma delas. Ou seja, plugue mais
+de uma linha "5V Power" do conector do Raspberry Pi à
+sua correspondente no conector do Sense Hat, fazendo o
+mesmo para as linhas "3V3 Power" e "Ground".
+
+### Comando de relés
+Talvez a principal funcionalidade desse sistema seja o
+comando de relés a partir da web.
+
+Para permitir isso, utilizamos uma placa de relés de
+8 canais, projetada para uso com microcontroladores
+da linha Arduino. Nada impede, porém, que seja empregada
+uma placa com menos canais.
+
+Na placa utilizada, cada relé tem a especificação de
+suportar cargas drenando até 10A, em tensões de até 250VAC,
+mas isso pode variar de placa para placa. É bom que você
+confira a sua placa, para saber seus limites.
+
+Muito embora a especificação desta placa seja para
+acionamento dos relés com sinais de 5V, os 3.3V fornecidos
+pelas portas GPIO do Raspberry Pi são mais que suficientes,
+para acioná-los de forma confiável, desde que a alimentação
+dos demais chips da placa seja suprida pela linha de 5V,
+e essa está presente no conector de E/S do Raspberry.
+
+Caso a sua placa de relés não tenha essa característica
+de poder ser acionada com sinais de 3.3V, você talvez
+tenha que inserir uma plaquinha conversora DC-DC, de
+3.3V para 5V, com tantos canais quantos desejar utilizar
+da sua placa de relés.
+
+A descrição da função de cada pino da placa de relés
+usualmente vem impressa na própria placa, como "Gnd",
+ou seja, o terra, "In1" até "In8", que são as entradas
+para acionar os relés, e "Vcc", onde deve ser conectada
+a alimentação, vinda da linha "5V Power" do Raspberry Pi. 
+Caso sua placa não traga a identificação impressa,
+consulte a documentação que a acompanha, ou o site
+do fabricante na Internet.
+
+Utilizando o mesmo esquema de pinagem do Raspberry em
+
+https://pinout.xyz/pinout/sense_hat
+
+podemos identificar as linhas de 5V, terra, e diversos
+pinos GPIO não utilizados pelo Sense Hat. Nesta parte,
+tudo o que temos de fazer é identificar pinos do GPIO
+não utilizados pelo Sense Hat, e conectá-los às entradas
+In1, In2, ... In8 da placa de relés.
+
+Exatamente qual pino do GPIO é conectado a qual
+das entradas InX da placa de relés é irrelevante,
+já que isso será configurado no arquivo hw-config.txt,
+como explicado na seção de configuração, acima.
+O importante é que não sejam usados pinos GPIO que
+já estejam em uso pelo Sense Hat.
+
+Ou seja, seguindo a numeração do site pinout.xyz,
+poderemos utilizar quaisquer dos pinos
+4, 14, 15, 17, 18, 27, 22, 10, 9, 11, 7, 0, 1, 5, 6,
+12, 13, 19, 16, 26, 20 ou 21
+(a ordem dos números aqui é para facilitar a
+identificação no diagrama do site).
+
+Como se pode ver, além de usar o Sense Hat, ainda é
+possível acionar diretamente até 22 relés com esse
+esquema. Desejando comandar mais dispositivos, o
+projeto teria que ser adaptado, talvez utilizando-se
+uma placa SIO ou I2C para fazer a multiplexação de
+canais por endereços lógicos, mas isso tornaria o
+software mais complexo.
