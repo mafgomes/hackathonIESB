@@ -24,3 +24,23 @@ Em seguida:
 
 	cd hackathonIESB
 	sudo ./install.sh
+
+## Hardware:
+Para iniciantes que não têm habilidade com solda, recomenda-se
+o uso de um protoboard, também conhecido como breadboard.
+Trata-se de uma placa com furação para que se insira os
+componentes, e com contatos entre estes furos, num padrão que
+facilita a montagem de circuitos.
+Uma descrição mais completa de protoboards, e de como usá-los
+pode ser baixada de
+
+http://www.uel.br/pessoal/ernesto/arduino/00_Protoboard.pdf
+
+Além do protoboard, você também precisará dos chamados jumpers,
+que nada mais são que fios com contatos em suas extremidades,
+de tamanho ideal para serem inseridos na furação do protoboard,
+e em conectores dos componentes.
+Os jumpers podem ser macho-macho, macho-fêmea, ou fẽmea-fêmea,
+indicando o tipo de contatos presentes em suas extremidades.
+
+
