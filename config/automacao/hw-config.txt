@@ -5,10 +5,9 @@
 # NF: normalmente fechado (quando acionado, abre-se o circuito)
 #
 # Relés
-18	NA 
-15	NA
 14	NF	Luz do escritório
-99	NA	# Para resolver o bug do PHP do Raspberry Pi
+15	NA
+18	NA 
 
 #23	NA
 #24	NA

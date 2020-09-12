@@ -12,9 +12,20 @@ Os relés podem estar ligados a luzes da casa, aparelhos elétricos,
 ou outros dispositivos.
 
 Pode-se usar também os sensores opcionais do Raspberry Pi para
-monitorar o ambiente. Sensores para temperatura, umidade, pressão,
-vazamento de gás, vazão de água, dentre outros, estão disponíveis
-no mercado.
+monitorar o ambiente. Sensores para temperatura, umidade, e
+pressão atmosférica foram implementados.
+
+### Expansão futura
+
+#### Mais sensores
+Sensores para vazamento de gás, vazão de água, dentre outros,
+estão disponíveis no mercado.
+
+#### Agendamento
+Ao invés de simplesmente ligar ou desligar dispositivos
+conectados aos relés, poderia ser criada uma interface para
+agendar o acionamento dos relés, com base em dias do mês/ano,
+dias da semana, e horários para ligar e para desligar.
 
 ## Instalação
 Para instalar, clone o repositório com o comando
@@ -153,3 +164,15 @@ projeto teria que ser adaptado, talvez utilizando-se
 uma placa SIO ou I2C para fazer a multiplexação de
 canais por endereços lógicos, mas isso tornaria o
 software mais complexo.
+
+Outra possibilidade seria usar um CI com registrador
+de deslocamento de bits (shift register), tal como o
+74HC595, que receberia sequencialmente os bits de
+comando dos relés, e os manteria num buffer.
+Esta possibilidade também aumentaria um pouco a
+complexidade do software e do hardware, mas permitiria
+o controle de praticamente qualquer número de relés,
+limitado apenas pela energia disponível para alimentar
+todo o circuito, a velocidade do processador, e a
+velocidade de resposta que se deseja para o acionamento
+de cada relé.

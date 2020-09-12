@@ -17,6 +17,12 @@ if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
 
+#Inicializa a placa controladora de relés
 /usr/local/automacao/hw-init.sh
+
+# Solução de contorno para o bug do Sensor Hat,
+# em que o sensor de pressão atmosférica retorna
+# zero na primeira leitura
+/usr/local/automacao/sensores.py > /dev/null 2>&1
 
 exit 0
