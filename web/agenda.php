@@ -5,17 +5,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8">
-    <title> Automação </title>
-    <script>
-      function agenda(rele) {
-	var form  = document.getElementById('aciona');
-	var porta = document.getElementById('porta');
-
-	porta.value = rele;
-	form.action = "/hack/agenda.php";
-	form.submit();
+    <title> <?php
+      $porta = $_REQUEST['porta'];
+      unset($rele);
+      foreach($gpio_conf['reles'] as $rele) {
+	if( $rele['num'] == $porta )
+	  break;
       }
-
+      if( $rele['num'] != $porta ) {
+        $back = 1;
+	echo('Porta desconhecida');
+      } else
+	echo('Agendamento para ' . $rele['nome']);
+    ?> </title>
+    <script>
       function comanda(rele, ligado) {
 	var valor;
 	var iframe = document.getElementById('nada');
@@ -30,7 +33,9 @@
       }
     </script>
   </head>
-  <body>
+  <body<?php if( $back == 1 )
+    echo(' onload="window.history.back();" ');
+  ?>>
     <?php if( $DEBUG ) { ?>
       <iframe id="nada"></iframe>
     <?php } else { //if( $DEBUG ) ?>
@@ -50,19 +55,19 @@
       echo("</pre>\n");
     }
 
-    unset($rele);
-    foreach($gpio_conf['reles'] as $rele) {
+    unset($agenda);
+    foreach($rele['agenda'] as $agenda) {
 
       if( $DEBUG ) {
 	echo("<pre>\n");
-	print_r($rele);
+	print_r($agenda);
 	echo("</pre>\n");
       }
 
-      // Cria o checkbox para o relé
+      // Cria o checkbox para o dia da semana
       echo('        <input type="checkbox" ');
-      echo('onclick="comanda(this.id, this.checked);" ');
-      echo('id="Rele' . $rele['num'] . '"');
+      echo('onclick="agendar(this.id, this.checked);" ');
+      echo('id="ag' . $agenda['nome'] . '"');
       // Verifica se o rele em questão está ativo
       // repare que, a depender do tipo, NA ou NF, 
       // a definição de "ativo" é invertida
@@ -70,16 +75,9 @@
 	echo(' checked');
       echo(">\n");
 
-      echo('        <label for="Rele' . $rele['num'] . '"> ');
-      echo($rele['nome']);
-      ?> </label>
-	<input type="button"
-	  id="Agenda<?php echo($rele['num']); ?>"
-	  value="Agendar"
-	  onclick="agenda(<?php echo($rele['num']); ?>);"
-	>
-	<br>
-<?php
+      echo('        <label for="ag' . $agenda['nome'] . '"> ');
+      echo($agenda['nome']);
+      echo(" </label><br>\n");
     }
 ?>
     </form>
