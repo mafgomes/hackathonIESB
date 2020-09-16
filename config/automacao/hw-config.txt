@@ -48,16 +48,17 @@
 # Free/Net/OpenBSD, Solaris, etc.).
 # Neste caso, usamos linhas no seguinte formato:
 #
-# - L/D  m  h  dm  nm  ds
+# - L/D/T  m  h  dm  nm  ds
 #
 # Todas se iniciam com um sinal '-', indicando que fazem parte
-# da agenda do relé definido mais recentemente.
+# do controle do relé definido mais recentemente.
 # Além desse identificador, há ainda os seguintes:
 #
-# L/D: define se a carga deve ser L (ligada) ou D (desligada) no
-#      momento especificado. Repare que o conceito do que é "ligar"
-#      ou "desligar" varia, conforme a carga esteja ligada ao lado
-#      NA ou ao lado NF do relé.
+# L/D/T: define se a carga deve ser L (ligada), D (desligada),
+#      ou T (trocar) de estado (ligada->desligada, ou vice-versa)
+#      no momento especificado. Repare que o conceito do que é
+#      "ligar" ou "desligar" varia, conforme a carga esteja
+#      conectada ao lado NA ou ao lado NF do relé.
 #   "Ligar" será acionar o relé para cargas conectadas ao lado NA,
 #      ou liberar o acionamento do relé para cargas conectadas ao
 #      lado NF do relé. De forma análoga,
@@ -99,20 +100,161 @@
 # tenhamos de olhar no calendário em que dia da semana aquele dia
 # específico irá cair.
 #
+# Reações a sensores:
+# -------------------
+#
+# Pode-se configurar reações a sensores, acionando ou
+# desligando automaticamente os relés, conforme os valores
+# obtidos a partir dos sensores.
+#
+# No arquivo de configuração de sensores, são associados nomes
+# aos valores lidos a partir dos sensores do sistema; aqui
+# na configuração de relés, podemos utilizar estes nomes,
+# juntamente com algumas definições de faixas de valores,
+# para ligar ou desligar cargas conectadas aos relés,
+# utilizando linhas com o seguinte formato:
+#
+# - S [sensor] L/D/T mín máx
+#
+# Todas se iniciam com um sinal '-', indicando que fazem parte
+# do controle do relé definido mais recentemente.
+# Além desse identificador, há ainda os seguintes:
+#
+# S:   usado para indicar que esta é uma definição de
+#      sensor, e não de agenda para o relé.
+@
+# [sensor] nome do sensor, conforme definido no arquivo de
+#      configuração de sensores.
+#      Além dos sensores definidos pelo usuário, há ainda
+#      os seguintes sensores predefinidos:
+#	 Temp	sensor de temperatura, do SenseHat
+#	 Umid	sensor de umidade, do SenseHat
+#	 Press	sensor de pressão, do SenseHat
+#
+# L/D/T: mesmo significado da entrada de agendamento, ou seja,
+#      define se a carga deve ser L (ligada), D (desligada),
+#      ou T (trocar de estado) na situação especificada,
+#      mantendo o mesmo conceito do que seja "ligar" ou
+#      "desligar", conforme a carga esteja conectada ao
+#      lado NA ou ao lado NF do relé.
+#
+# mín	valor mínimo que deve ser lido do sensor para que a
+#	ação (ligar ou desligar) seja tomada.
+#	Pode-se especificar o valor especial * (asterisco),
+#	significando "qualquer valor menor que o valor máximo".
+#
+# máx	valor máximo que deve ser lido do sensor para que a
+#	ação (ligar ou desligar) seja tomada.
+#	Pode-se especificar o valor especial * (asterisco),
+#	significando "qualquer valor maior que o valor máximo".
+#
+# Deve-se ter em mente que, como os valores são lidos dos
+# sensores periodicamente (por default, a cada 5 minutos),
+# pode acontecer de um valor entrar e sair de uma faixa
+# especificada e não chegar a acionar o relé correspondente,
+# por tudo ter acontecido entre uma leitura e outra.
+#
+# Caso seja necessária uma resposta mais imediata, deve-se
+# aumentar a periodicidade das leituras, diminuindo-se o
+# tempo entre uma leitura e outra.
+#
+# Para efetuar essa alteração, deve-se editar a tabela
+# do utilitário cron do sistema, logando com o mesmo
+# usuário usado durante a instalação do sistema de automação,
+# e usando o comando
+#	crontab -e
+#
+# Repare que o valor * pode ser usado em ambos os campos
+# (máx e mín) ao mesmo tempo. Caso isso seja feito, o sistema
+# irá efetuar a ação indicada (ligar, desligar, ou trocar de
+# estado) sempre que for efetuada uma leitura do sensor.
+#
 # -----------------------------------------------------
 # Aqui começa a definição propriamente dita, conforme o
 # formato descrito acima
 # -----------------------------------------------------
-14	NF	Luz do escritório
-# L/D  m  h  dm  ms  ds
-- L    0  8  *   *   1	# Liga toda segunda-feira às 8h da manhã
-- D    0 19  *   *   5	# Desiga toda sexta-feira às 7h da noite
+#
+# Para o relé da luz do escritório, não fizemos
+# definições de agenda ou de sensores,
+# o que significa que seu controle é manual,
+# via web, ou através do app.
 
-15	NA
-18	NA 
+4	NF	Luz do escritório
 
-#23	NA
-#24	NA
-#25	NA
-#8	NA
-#7	NA
+# Repare que, como todos os relés têm ambos os
+# contatos NA e NF, é possível fazer uma ligação
+# do tipo "three-way", em que tanto o interruptor
+# normal de parede quanto o relé do sistema de
+# automação poderão ser usados para ligar ou para
+# desligar a luz.
+#
+# No entanto, ao fazer um circuito assim, a
+# automação será confundida, pois, a depender
+# do estado do interrruptor de parede, a ação
+# do relé poderá ser invertida, ou seja, a luz
+# será ligada quando o sistema tiver a intenção
+# de desligá-la, e vice-versa.
+#
+# Também é possível, usando-se dois interruptores,
+# um para ligar e outro para desligar, fazer um
+# circuito para que o acionamento manual se
+# sobreponha ao da automação, ou vice-versa:
+# usando dois relés, pode-se fazer com que a
+# automação se sobreponha ao acionamento dos
+# interruptores de parede.
+#
+# Vide o arquivo com o desenho dos circuitos,
+# que acompanha a documentação.
+
+17	NF	Ar condicionado central
+# Liga toda segunda-feira às 7h da manhã
+# L/D	m	h	dm	ms	ds
+- L	0	7	*	*	1
+# Desiga toda sexta-feira às 9h da noite
+- D	0	21	*	*	5
+
+27	NA	Bomba da piscina
+# Este relé é mantido ligado por 15 min, de hora em hora,
+# das 8 da manhã até as 5:15 da tarde, quando é desligado
+# pela última vez. Isso ocorre apenas aos finais de semana:
+#
+# Liga todo fim de semana, a cada hora cheia das 8h às 17h
+- L	0	 8-17	*	*	6,7
+# Desliga todo fim de semana, aos 15 min de cada hora,
+# a partir das 8:15, até 17:15
+- D	15	 8-17	*	*	6,7
+
+22	NA	Extintor de incêndio
+# O extintor é ligado sempre que a temperatura
+# ambiente atinge 65 graus, e desligado quando
+# ela cai para 50 graus ou menos:
+# S	Sensor	L/D/T	mín	máx
+- S	Temp	L	65	*
+- S	Temp	D	*	50
+
+14      NA
+15      NA
+18      NA
+7       NA
+
+# Portas GPIO ainda disponíveis para acrescentarmos
+# mais relés, ou para outros tipos de interface:
+#10	NA
+#9	NA
+#11	NA
+#5	NA
+#6	NA
+#12	NA
+#13	NA
+#19	NA
+#16	NA
+#26	NA
+#20	NA
+#21	NA
+
+# As portas 0 e 1 são reservadas, mas nada impede
+# que as utilizemos, desde que não seja em conjunto
+# com outras placas para Raspberry Pi, já que podem
+# apresentar algum tipo de conflito.
+#0	NA
+#1	NA
