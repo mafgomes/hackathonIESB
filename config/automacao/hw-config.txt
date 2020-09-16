@@ -1,11 +1,113 @@
 # Configuração do sistema de automação:
+# -------------------------------------
 #
-# Como estão ligadas as cargas aos relés:
-# NA: normalmente aberto (quando acionado, fecha-se o circuito)
-# NF: normalmente fechado (quando acionado, abre-se o circuito)
+# Comentários podem ser feitos em qualquer lugar deste arquivo,
+# iniciando-se num caractere '#', e estendendo-se até o final
+# da linha. Exatamente como estes aqui.
 #
-# Relés
+# ATENÇÃO: quaisquer comentários serão perdidos se for feito
+# o agendamento pelo sistema, momento em que este arquivo será
+# sobrescrito!
+#
+# Se você deseja mantê-los, copie este arquivo para outro lugar,
+# ou faça agendamentos apenas editando este arquivo, nunca pelo
+# sistema. Na pior das hipóteses, você sempre pode baixá-lo
+# novamente, a partir do GitHub, em
+# https://github.com/mafgomes/hackathonIESB
+#
+# Obviamente, os SEUS comentários serão perdidos, se não for
+# efetuada uma cópia.
+#
+# Definições de cargas ligadas aos relés:
+# ---------------------------------------
+#
+# Usa-se uma única linha para cada relé, no seguinte formato:
+#
+# [GPIO] [NA/NF] [Descrição]
+#
+# Onde:
+#
+# [GPIO] é o número da porta GPIO do Raspberry Pi à qual está
+#        conectado o controle do relé.
+#
+# [NA/NF] Indica a qual seção do relé está conectada a carga:
+#
+#   NA: normalmente aberta (quando acionado, fecha-se o circuito)
+#   NF: normalmente fechada (quando acionado, abre-se o circuito)
+#
+# [Descrição] Seção opcional, em que o usuário pode definir
+#   um nome que faça sentido para ele. Se não especificado,
+#   o sistema utilizará o nome "Relé da porta GPIO [n]", onde
+#   [n] é o número da porta GPIO indicado no início da linha.
+#
+# Entradas de agenda:
+# -------------------
+#
+# Usa-se uma sintaxe parecida, embora não idêntica, com a do
+# utilitário 'cron', dos sistemas baseados em Unix (Linux,
+# Free/Net/OpenBSD, Solaris, etc.).
+# Neste caso, usamos linhas no seguinte formato:
+#
+# - L/D  m  h  dm  nm  ds
+#
+# Todas se iniciam com um sinal '-', indicando que fazem parte
+# da agenda do relé definido mais recentemente.
+# Além desse identificador, há ainda os seguintes:
+#
+# L/D: define se a carga deve ser L (ligada) ou D (desligada) no
+#      momento especificado. Repare que o conceito do que é "ligar"
+#      ou "desligar" varia, conforme a carga esteja ligada ao lado
+#      NA ou ao lado NF do relé.
+#   "Ligar" será acionar o relé para cargas conectadas ao lado NA,
+#      ou liberar o acionamento do relé para cargas conectadas ao
+#      lado NF do relé. De forma análoga,
+#   "Desligar" será acionar o relé para cargas conectadas ao lado NF,
+#      ou liberar seu acionamento para cargas conectadas ao lado NA.
+# m:  minutos (de 0 a 59)
+# h:  horas (de 0 a 23)
+# dm: dia do mês (de 1 a 31)
+# nm: número do mês (jan = 1 ... dez = 12)
+# ds: dia da semana (seg = 1 ... dom = 7)
+#
+# Repare que nada impede que seja especificado um horário para
+# que o relé seja ligado automaticamente, e não seja especificado
+# um horário de desligamento. E vice-versa.
+#
+# CUIDADO: se for especificado um dia inexistente naquele mês,
+# como, por exemplo, 31 de fevereiro, a entrada será aceita,
+# e NÃO gerará qualquer aviso. Porém, não surtirá efeito algum.
+#
+# Da mesma forma, especificar um dia do mês e um dia da semana,
+# sem que eles coincidam não surtirá qualquer efeito. Mas vide
+# a especificação do valor coringa (*), mais adiante.
+#
+# Todos os valores em uma entrada de agenda podem ser
+# especificados literalmente, ou podem conter uma lista de
+# valores separados por vírgulas, sem espaços entre si, ou
+# uma faixa de valores, especificados como um valor de início
+# seguido de um hífen, e de um falor final, sem espaços.
+#
+# Um valor único (não uma lista ou uma faixa de valores) pode
+# ser sucedido por uma barra e um outro valor. Por exemplo, se
+# especificarmos os minutos como 5/10, isso significa "a cada
+# 10 minutos, a partir do minuto 5". Ou seja, aos 5, 15, 25,
+# 35, 45 e 55 minutos da(s) hora(s) especificada(s).
+#
+# Pode ser usado ainda o valor coringa '*' (asterisco),
+# significando qualquer valor (por exemplo, qualquer dia da semana),
+# facilitando assim a especificação de um dia qualquer, sem que
+# tenhamos de olhar no calendário em que dia da semana aquele dia
+# específico irá cair.
+#
+# -----------------------------------------------------
+# Aqui começa a definição propriamente dita, conforme o
+# formato descrito acima
+# -----------------------------------------------------
 14	NF	Luz do escritório
+# L/D  m  h  dm  ms  ds
+- L    0  8  *   *   1	# Liga toda segunda-feira às 8h da manhã
+- D    0 19  *   *   5	# Desiga toda sexta-feira às 7h da noite
+
 15	NA
 18	NA 
 

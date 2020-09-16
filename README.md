@@ -79,11 +79,18 @@ está bem documentado em:
 
 https://pinout.xyz/pinout/sense_hat
 
-Embora esta página esteja em inglês, como mostra graficamente
-a pinagem, destacando os pinos utilizados, não deve haver
-dificuldade em conectar os pinos correspondentes, principalmente
-sabendo-se que o conector do Sense Hat foi projetado para
-encaixar-se perfeitamente ao conector do Raspberry Pi.
+E, para quem tem curiosidade de saber exatamente como é
+o circuito completo do tal Sense Hat, o diagrama lógico
+desse produto pode ser baixado em
+
+https://www.raspberrypi.org/documentation/hardware/sense-hat/images/Sense-HAT-V1_0.pdf
+
+Embora ambas as páginas estejam em inglês, como são mais
+gráficas que textuais, e a primeira inclusive destaca
+os pinos utilizados, não deve haver dificuldade em conectar
+os pinos correspondentes, principalmente sabendo-se que o
+conector do Sense Hat foi projetado para encaixar-se
+perfeitamente ao conector do Raspberry Pi.
 
 Só não se esqueça de plugar, além das linhas de sinal,
 também as linhas de alimentação (5V, 3.3V, e terra), que

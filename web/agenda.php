@@ -64,6 +64,16 @@
 	echo("</pre>\n");
       }
 
+      unset($key); unset($val);
+      foreach($agenda['def'] as $key => $val) {
+	echo('<label>' . $key );
+	echo(' <input type="text" id="');
+	echo($agenda['id'] . $key);
+	echo('">');
+	echo($val);
+	echo("</input></label>\n");
+      }
+      echo("<br>\n");
       // Cria o checkbox para o dia da semana
       echo('        <input type="checkbox" ');
       echo('onclick="agendar(this.id, this.checked);" ');
@@ -81,38 +91,6 @@
     }
 ?>
     </form>
-    <hr>
-<?php
-      // passthru("./sensores.py");
-      //
-      // Ler diretamente os sensores não funcionou,
-      // já que a biblioteca para ler sensores é bugada
-      // e tenta criar arquivos e diretórios no $HOME do
-      // usuário que a invoca. Como o usuário em questão
-      // é o usuário do Apache para acessar o sistema de
-      // arquivos (www-data), isso não funciona.
-      //
-      // Solução: ler os sensores periodicamente,
-      // via cron, guardando os valores num arquivo, e
-      // exibindo-os aqui. Além desse arquivo, o script
-      // rodado pelo cron mantém ainda hist_sensores.txt,
-      // que guarda o histórico dos valores.
-      // Precisa ser feito um mecanismo para evitar que
-      // o crescimento do arquivo hist_sensores.txt não
-      // acabe lotando o sistema de arquivos, e impeça
-      // o bom funcionamento do sistema operacional.
-      //
-      $dados = file('/usr/local/automacao/sensores.txt');
-      unset($dado);
-      $dado = array_shift($dados);
-      echo("Dados de $dado:<br>\n");
-      // Mais tarde, pode ser interessante:
-      //echo(date_create_from_format('U', $dado).format(
-      //  'L, d/m/Y, H:i') . ":<br>\n");
-      foreach( $dados as $dado ) {
-	echo("&nbsp; &nbsp; $dado<br>\n");
-      }
-?>
   </body>
 </html>
 <?php // vim: set syntax=php ts=2 sw=2 ai ic sts=2 sr noet ?>
