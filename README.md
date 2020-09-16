@@ -44,10 +44,26 @@ com o comando
 	cd /usr/local/automacao
 
 e edite o arquivo hw-config.txt, para refletir a configuração
-do seu hardware, ou seja, para que você descreva quais pinos
-da interface GPIO estão ligados aos relés e, opcionalmente,
-que nome você pretende atribuir para as cargas acionadas por
-cada um dos relés.
+do seu hardware. A principal configuração a ser feita é
+a descrição de quais pinos da interface GPIO estão ligados
+aos relés e, opcionalmente, que nome você pretende atribuir
+para as cargas acionadas por cada um dos relés.
+
+Mas nesse arquivo também se pode efetuar muitas das
+configurações disponíveis na interface gráfica, como
+acionamento de relés; ou respostas automatizadas a
+leituras de sensores, como temperatura, umidade, e pressão.
+
+#### ATENÇÃO
+É muito importante que você leia o arquivo de configuração
+hw-config.txt, ainda que não pretenda configurar o sistema
+de imediato, pois ele contém boa parte da documentação sobre
+este sistema!
+
+Em particular, este arquivo descreve o mecanismo pelo qual
+é possível fazer o agendamento de acionamentos ou desligamentos
+de relés, tanto periodicamente quanto uma única vez, ou mesmo
+em resposta à leitura de sensores.
 
 ## Hardware
 Para iniciantes que não têm habilidade com solda, recomenda-se

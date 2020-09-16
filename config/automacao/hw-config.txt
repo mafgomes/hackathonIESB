@@ -43,15 +43,15 @@
 # Entradas de agenda:
 # -------------------
 #
-# Usa-se uma sintaxe parecida, embora não idêntica, com a do
-# utilitário 'cron', dos sistemas baseados em Unix (Linux,
-# Free/Net/OpenBSD, Solaris, etc.).
+# Usa-se uma sintaxe parecida com, embora não idêntica à,
+# do utilitário 'cron', presente nos sistemas baseados
+# em Unix (Linux, Free/Net/OpenBSD, Solaris, etc).
 # Neste caso, usamos linhas no seguinte formato:
 #
-# - L/D/T  m  h  dm  nm  ds
+# - L/D/T  m  h  dm  nm  an  ds
 #
-# Todas se iniciam com um sinal '-', indicando que fazem parte
-# do controle do relé definido mais recentemente.
+# Todas se iniciam com um sinal '-', indicando que fazem
+# parte do controle do relé definido mais recentemente.
 # Além desse identificador, há ainda os seguintes:
 #
 # L/D/T: define se a carga deve ser L (ligada), D (desligada),
@@ -68,11 +68,14 @@
 # h:  horas (de 0 a 23)
 # dm: dia do mês (de 1 a 31)
 # nm: número do mês (jan = 1 ... dez = 12)
+# an: número do ano (com 4 dígitos!)
 # ds: dia da semana (seg = 1 ... dom = 7)
 #
 # Repare que nada impede que seja especificado um horário para
 # que o relé seja ligado automaticamente, e não seja especificado
-# um horário de desligamento. E vice-versa.
+# um horário de desligamento.
+# E vice-versa: não é necessário especificar um horário para
+# acionamento para poder especificar um horário para seu desligamento.
 #
 # CUIDADO: se for especificado um dia inexistente naquele mês,
 # como, por exemplo, 31 de fevereiro, a entrada será aceita,
@@ -203,15 +206,16 @@
 # automação se sobreponha ao acionamento dos
 # interruptores de parede.
 #
-# Vide o arquivo com o desenho dos circuitos,
-# que acompanha a documentação.
+# Vide os arquivos com o desenho dos circuitos,
+# que acompanham a documentação, no diretório
+# 'esquemas'.
 
 17	NF	Ar condicionado central
 # Liga toda segunda-feira às 7h da manhã
-# L/D	m	h	dm	ms	ds
-- L	0	7	*	*	1
+# L/D	m	h	dm	ms	an	ds
+- L	0	7	*	*	*	1
 # Desiga toda sexta-feira às 9h da noite
-- D	0	21	*	*	5
+- D	0	21	*	*	*	5
 
 27	NA	Bomba da piscina
 # Este relé é mantido ligado por 15 min, de hora em hora,
@@ -219,10 +223,10 @@
 # pela última vez. Isso ocorre apenas aos finais de semana:
 #
 # Liga todo fim de semana, a cada hora cheia das 8h às 17h
-- L	0	 8-17	*	*	6,7
+- L	0	 8-17	*	*	*	6,7
 # Desliga todo fim de semana, aos 15 min de cada hora,
 # a partir das 8:15, até 17:15
-- D	15	 8-17	*	*	6,7
+- D	15	 8-17	*	*	*	6,7
 
 22	NA	Extintor de incêndio
 # O extintor é ligado sempre que a temperatura

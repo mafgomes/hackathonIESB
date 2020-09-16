@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8">
+    <!-- meta http-equiv="refresh" content="60; URL='/hack'"/ -->
     <title> Automação </title>
     <script>
       function agenda(rele) {
