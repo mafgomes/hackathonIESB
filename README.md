@@ -127,9 +127,16 @@ comando de relés a partir da web.
 Para permitir isso, utilizamos uma placa de relés de
 8 canais, projetada para uso com microcontroladores
 da linha Arduino. Nada impede, porém, que seja empregada
-uma placa com menos canais.
+uma placa com um número maior ou menor de canais.
 
-Na placa utilizada, cada relé tem a especificação de
+A placa empregada parece ser um clone exato da placa
+da Sunfounder, inclusive utilizando os mesmos componentes.
+A documentação da placa da Sunfounder pode ser encontrada
+nesta página:
+
+http://wiki.sunfounder.cc/index.php?title=8_Channel_5V_Relay_Module
+
+Nela, cada relé tem a especificação de
 suportar cargas drenando até 10A, em tensões de até 250VAC,
 mas isso pode variar de placa para placa. É bom que você
 confira a sua placa, para saber seus limites.
