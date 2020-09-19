@@ -13,19 +13,42 @@ ou outros dispositivos.
 
 Pode-se usar também os sensores opcionais do Raspberry Pi para
 monitorar o ambiente. Sensores para temperatura, umidade, e
-pressão atmosférica foram implementados.
+pressão atmosférica foram implementados, e a mesma placa
+Sense HAT usada oferece diversos outros sensores.
+
+### Agendamento
+Ao invés de simplesmente ligar ou desligar dispositivos
+conectados aos relés, o sistema pode ser configurado também
+para agendar o acionamento dos relés, com base em dias do
+mês/ano, dias da semana, e horários para ligar e para desligar.
 
 ### Expansão futura
 
 #### Mais sensores
-Sensores para vazamento de gás, vazão de água, dentre outros,
-estão disponíveis no mercado.
+O hardware utilizado possui sensores que não foram aproveitados
+neste projeto.  Por só requerer alterações ao software, talvez
+fosse interessante utilizar estes sensores adicionais ou o
+joystick integrado ao Sense HAT.
 
-#### Agendamento
-Ao invés de simplesmente ligar ou desligar dispositivos
-conectados aos relés, poderia ser criada uma interface para
-agendar o acionamento dos relés, com base em dias do mês/ano,
-dias da semana, e horários para ligar e para desligar.
+Sensores como giroscópio, acelerômetro e magnetômetro (bússola)
+talvez pudessem ser utilizados em áreas sujeitas a terremotos e
+gerar um alerta remoto para o morador, informando que sua casa
+está sendo afetada.
+
+O joystick talvez pudesse ser utilizado no controle de luzes,
+ligando ou desligando luzes à nossa volta. Integrado aos
+sensores, que poderiam determinar o posicionamento das luzes,
+relativamente ao usuário, ligá-las apontando em sua direção
+com o joystick poderia ser um efeito interessante.
+
+Além do hardware já instalado, muito mais está disponível no
+mercado e possuem interface relativamente simples.
+Sensores para vazamento de gás, vazão de água, nível de
+luminosidade ambiente, dentre outros, poderiam ser integrados
+ao projeto sem muita complicação.
+
+Acender luzes ao escurecer, alarmar vazamentos, dentre outras
+utilizações, se tornariam possíveis com tais modificações.
 
 ## Instalação
 Para instalar, clone o repositório com o comando

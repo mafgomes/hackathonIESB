@@ -1,11 +1,11 @@
 <?php
   $DEBUG=0;
-  require_once("gpio_defs.php");
+  require_once("config.php");
 ?><!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8">
-    <!-- meta http-equiv="refresh" content="60; URL='/hack'"/ -->
+    <!-- meta http-equiv="refresh" content="5; URL='/hack'"/ -->
     <title> Automação </title>
     <script>
       function agenda(rele) {
@@ -32,6 +32,7 @@
     </script>
   </head>
   <body>
+    <h1> Sistema de automação </h1>
     <?php if( $DEBUG ) { ?>
       <iframe id="nada"></iframe>
     <?php } else { //if( $DEBUG ) ?>
@@ -47,7 +48,12 @@
 <?php
     if( $DEBUG ) {
       echo("<pre>\n");
+      echo("Relés:\n");
       print_r($gpio_conf);
+      echo("Agenda:\n");
+      print_r($agenda);
+      echo("Sensores:\n");
+      print_r($val_sensores);
       echo("</pre>\n");
     }
 

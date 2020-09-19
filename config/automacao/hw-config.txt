@@ -125,7 +125,7 @@
 #
 # S:   usado para indicar que esta é uma definição de
 #      sensor, e não de agenda para o relé.
-@
+#
 # [sensor] nome do sensor, conforme definido no arquivo de
 #      configuração de sensores.
 #      Além dos sensores definidos pelo usuário, há ainda
@@ -210,7 +210,7 @@
 # que acompanham a documentação, no diretório
 # 'esquemas'.
 
-17	NF	Ar condicionado central
+17	NA	Ar condicionado central
 # Liga toda segunda-feira às 7h da manhã
 # L/D	m	h	dm	ms	an	ds
 - L	0	7	*	*	*	2
