@@ -67,9 +67,9 @@
 # m:  minutos (de 0 a 59)
 # h:  horas (de 0 a 23)
 # dm: dia do mês (de 1 a 31)
-# nm: número do mês (jan = 1 ... dez = 12)
+# nm: número do mês (jan = 1, fev=2, ... dez = 12)
 # an: número do ano (com 4 dígitos!)
-# ds: dia da semana (seg = 1 ... dom = 7)
+# ds: dia da semana (dom = 1, seg=2, ... sáb=7)
 #
 # Repare que nada impede que seja especificado um horário para
 # que o relé seja ligado automaticamente, e não seja especificado
@@ -213,9 +213,9 @@
 17	NF	Ar condicionado central
 # Liga toda segunda-feira às 7h da manhã
 # L/D	m	h	dm	ms	an	ds
-- L	0	7	*	*	*	1
+- L	0	7	*	*	*	2
 # Desiga toda sexta-feira às 9h da noite
-- D	0	21	*	*	*	5
+- D	0	21	*	*	*	6
 
 27	NA	Bomba da piscina
 # Este relé é mantido ligado por 15 min, de hora em hora,
@@ -223,10 +223,10 @@
 # pela última vez. Isso ocorre apenas aos finais de semana:
 #
 # Liga todo fim de semana, a cada hora cheia das 8h às 17h
-- L	0	 8-17	*	*	*	6,7
+- L	0	 8-17	*	*	*	7,1
 # Desliga todo fim de semana, aos 15 min de cada hora,
 # a partir das 8:15, até 17:15
-- D	15	 8-17	*	*	*	6,7
+- D	15	 8-17	*	*	*	7,1
 
 22	NA	Extintor de incêndio
 # O extintor é ligado sempre que a temperatura
